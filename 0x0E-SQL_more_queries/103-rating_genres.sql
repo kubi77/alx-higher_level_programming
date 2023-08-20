@@ -1,8 +1,8 @@
---lists all genres in the database hbtn_0d_tvshows_rate by their rating.
-SELECT tv_shows.title FROM tv_shows
-WHERE tv_shows.id NOT IN (
-      SELECT tv_shows.id FROM tv_shows
-      JOIN tv_show_genres ON tv_shows.id=tv_show_genres.show_id
-      JOIN tv_genres ON tv_genres.id=tv_show_genres.genre_id
-      WHERE tv_genres.name = "Comedy" )
-ORDER BY tv_shows.title;
+-- lists all genres in the database hbtn_0d_tvshows_rate by their rating
+-- lists all rows in a database linked to a row in another table
+SELECT name, SUM(tv_show_ratings.rate) 'rating'
+FROM tv_genres
+INNER JOIN tv_show_genres ON tv_genres.id = tv_show_genres.genre_id
+INNER JOIN tv_show_ratings ON tv_show_genres.show_id = tv_show_ratings.show_id
+GROUP BY name
+ORDER BY rating DESC;
